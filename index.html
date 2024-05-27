@@ -8,12 +8,11 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-color: #ADD8E6; /* Fond bleu clair */
+            background-color: #000; /* Fond noir */
             margin: 0;
             padding: 0;
         }
         .top-banner {
-            background-color: #000; /* Fond noir */
             color: white;
             padding: 10px;
             display: flex;
@@ -141,11 +140,13 @@
                 <p>Coucher du soleil: ${sunsetTime}</p>
             `;
         }
+
         // Fonction pour afficher l'heure et la date
         function displayDateTime() {
             const now = new Date();
             const datetimeElement = document.getElementById('datetime');
-            const options = { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' };
+            const options = { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '
+2-digit', year: 'numeric' };
             const formattedDateTime = now.toLocaleString('fr-FR', options);
             datetimeElement.textContent = formattedDateTime;
         }
