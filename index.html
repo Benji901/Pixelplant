@@ -16,10 +16,9 @@
             background-color: #000; /* Fond noir */
             color: white;
             padding: 10px;
-            height: 30px; /* Hauteur du bandeau noir */
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column; /* Alignement vertical des éléments */
+            align-items: center; /* Centrage horizontal */
         }
         .header {
             display: flex;
@@ -28,8 +27,7 @@
             background-color: #00008B; /* Fond bleu foncé */
             color: white;
             padding: 10px;
-            margin-top: 20px;
-            margin-bottom: 10px; /* Marge basse ajoutée */
+            margin-top: 10px; /* Marge haute réduite */
         }
         .weather-info, .forecast-box, .additional-info {
             padding: 5px; /* Réduction du rembourrage */
@@ -50,11 +48,11 @@
     <div class="top-banner">
         <h1>PixelPlant</h1>
         <div id="datetime"></div> <!-- Affichage de l'heure et de la date -->
-    </div>
-    <div class="header">
-        <div class="weather-info" id="current-weather"></div>
-        <div class="forecast-box" id="next-forecast"></div>
-        <div class="additional-info" id="additional-info"></div>
+        <div class="header">
+            <div class="weather-info" id="current-weather"></div>
+            <div class="forecast-box" id="next-forecast"></div>
+            <div class="additional-info" id="additional-info"></div>
+        </div>
     </div>
 
     <script>
@@ -122,7 +120,8 @@
             const forecastInfo = document.getElementById('next-forecast');
             const nextForecast = data.list[0];
             forecastInfo.innerHTML = `
-                <h2>Prochaine prévision</h2>
+                <h2>Prochaine prévision</h2
+>
                 <p>${new Date(nextForecast.dt * 1000).toLocaleString('fr-FR', { hour: '2-digit', minute: '2-digit' })}</p>
                 <p>Température: ${nextForecast.main.temp} °C</p>
                 <p>Humidité: ${nextForecast.main.humidity} %</p>
@@ -139,7 +138,7 @@
             additionalInfo.innerHTML = `
                 <h2>Informations supplémentaires</h2>
                 <p>Lever du soleil: ${sunriseTime}</p>
-                <p>Coucher du soleil: ${sunsetTime}</
+                <p>Coucher du soleil: ${sunsetTime}</p>
             `;
         }
 
