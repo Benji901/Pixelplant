@@ -10,7 +10,13 @@
             font-family: Arial, sans-serif;
             text-align: center;
             background-color: #ADD8E6; /* Couleur de fond bleu clair */
-            margin: 20px;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #00008B; /* Couleur de fond bleu foncé */
+            color: white;
+            padding: 20px;
         }
         .weather-info {
             margin: 20px 0;
@@ -18,13 +24,11 @@
     </style>
 </head>
 <body>
-    <!-- Titre de la page -->
-    <h1>Météo à Villereau (45170)</h1>
-    <!-- Div pour afficher la date et l'heure actuelles -->
-    <div id="current-time" class="weather-info"></div>
-    <!-- Div pour afficher les informations météorologiques actuelles -->
-    <div id="current-weather" class="weather-info">
-        <p>Chargement des données météorologiques...</p>
+    <!-- Bandeau bleu foncé en haut de la page -->
+    <div class="header">
+        <h1>Météo à Villereau (45170)</h1>
+        <div id="current-time"></div>
+        <div id="current-weather"></div>
     </div>
     <!-- Div pour afficher les prévisions horaires -->
     <div id="hourly-forecast" class="weather-info"></div>
@@ -74,10 +78,7 @@
         function displayCurrentWeather(data) {
             const weatherInfo = document.getElementById('current-weather');
             weatherInfo.innerHTML = `
-                <p>Température: ${data.main.temp} °C</p>
-                <p>Description: ${data.weather[0].description}</p>
-                <p>Humidité: ${data.main.humidity} %</p>
-                <p>Vent: ${data.wind.speed} m/s</p>
+                <p>Température: ${data.main.temp} °C | Humidité: ${data.main.humidity} % | Pression: ${data.main.pressure} hPa | Vent: ${data.wind.speed} m/s ${getWindDirection(data.wind.deg)}</p>
             `;
         }
 
@@ -103,6 +104,13 @@
             const now = new Date();
             const currentTime = now.toLocaleString('fr-FR', { dateStyle: 'full', timeStyle: 'short' });
             document.getElementById('current-time').innerHTML = `<p>${currentTime}</p>`;
+        }
+
+        // Fonction pour obtenir la direction du vent à partir de l'angle en degrés
+        function getWindDirection(deg) {
+            const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+            const index = Math.round(deg / 45) % 8;
+            return directions[index];
         }
 
         // Appel des fonctions pour récupérer les données et afficher l'heure actuelle
