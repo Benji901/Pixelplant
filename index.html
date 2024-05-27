@@ -17,15 +17,20 @@
             background-color: #000; /* Couleur de fond noir */
             color: white;
             padding: 10px;
-            height: 40px; /* Hauteur réduite pour le bandeau noir */
+            height: 30px; /* Hauteur réduite pour le bandeau noir */
+            display: flex;
+            justify-content: center; /* Centrage horizontal */
+            align-items: center; /* Centrage vertical */
         }
         .header {
             display: flex;
-            flex-direction: column; /* Contenu empilé verticalement */
-            align-items: center;
+            flex-direction: row; /* Contenu en ligne (horizontalement) */
+            justify-content: space-around; /* Espace autour des éléments */
+            align-items: center; /* Centrage vertical */
             background-color: #00008B; /* Couleur de fond bleu foncé */
             color: white;
             padding: 20px;
+            height: 150px; /* Hauteur réduite pour le bandeau bleu foncé */
         }
         .weather-info, .forecast-box {
             margin-top: 20px; /* Espacement entre les sections */
@@ -35,7 +40,7 @@
             padding: 10px;
             background-color: white;
             color: black;
-            width: 80%; /* Largeur réduite pour la prévision */
+            width: 300px; /* Largeur du carré de prévision */
         }
     </style>
 </head>
@@ -46,8 +51,6 @@
     </div>
     <!-- Bandeau bleu foncé avec les informations météo -->
     <div class="header">
-        <h1>Météo à Villereau (45170)</h1>
-        <div id="current-time"></div>
         <div id="current-weather" class="weather-info"></div>
         <div id="next-forecast" class="forecast-box"></div>
     </div>
@@ -97,7 +100,7 @@
         function displayCurrentWeather(data) {
             const weatherInfo = document.getElementById('current-weather');
             weatherInfo.innerHTML = `
-                <p>Température: ${data.main.temp} °C | Humidité: ${data.main.humidity} % | Pression: ${data.main.pressure} hPa | Vent: ${data.wind.speed} m/s ${getWindDirection(data.wind.deg)} | Couverture nuageuse: ${data.clouds.all} %</p>
+                <p>Température: ${data.main.temp} °C | Humidité: ${data.main.humidity} % | Pression: ${data.main.pressure} hPa | Vent: ${data.wind.speed} m/s | Couverture nuageuse: ${data.clouds.all} %</p>
             `;
         }
 
@@ -107,30 +110,13 @@
             const nextForecast = data.list[0];
             forecastInfo.innerHTML = `
                 <h2>Prochaine prévision</h2>
-                <p>${new Date(nextForecast.dt * 1000).toLocaleString('fr-FR', { hour: '2-digit', minute: '2-digit' })} | Température: ${nextForecast.main.temp} °C | Humidité: ${nextForecast.main.humidity} % | Pression: ${nextForecast.main.pressure} hPa | Vent: ${nextForecast.wind.speed} m/s ${getWindDirection(nextForecast.wind.deg)} | Couverture nuageuse: ${nextForecast.clouds.all} %</p>
+                <p>${new Date(nextForecast.dt * 1000).toLocaleString('fr-FR', { hour: '2-digit', minute: '2-digit' })} | Température: ${nextForecast.main.temp} °C | Humidité: ${nextForecast.main.humidity} % | Pression: ${nextForecast.main.pressure} hPa | Vent: ${nextForecast.wind.speed} m/s | Couverture nuageuse: ${nextForecast.clouds.all} %</p>
             `;
         }
 
-        // Fonction pour afficher l'heure et la date actuelles
-        function displayCurrentTime() {
-            const now = new Date();
-            const currentTime = now.toLocaleString('fr-FR', { dateStyle: 'full', timeStyle: 'short' });
-            document.getElementById('current-time').innerHTML = `<p>${currentTime}</p>`;
-        }
-
-        // Fonction pour obtenir la direction du vent à partir de l'angle en degrés
-        function getWindDirection(deg) {
-            const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-            const index = Math.round(deg / 45) % 8;
-            return directions[index];
-        }
-
-        // Appel des fonctions pour récupérer les données et afficher l'heure actuelle
+        // Appel des fonctions pour récupérer les données
         fetchWeather();
         fetchNextForecast();
-        displayCurrentTime();
-        // Mise à jour de l'heure et de la date toutes les minutes
-        setInterval(displayCurrentTime, 60000);
     </script>
 </body>
 </html>
