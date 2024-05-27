@@ -29,7 +29,7 @@
             background-color: #00008B; /* Fond bleu foncé */
             color: white;
             padding: 20px;
-            height: 200px; /* Hauteur du bandeau bleu foncé */
+            height: auto; /* Hauteur automatique pour le bandeau bleu foncé */
         }
         .weather-info, .forecast-box {
             margin-top: 20px;
@@ -56,9 +56,9 @@
         <div id="next-forecast" class="forecast-box"></div>
         <div class="additional-info">
             <h2>Informations supplémentaires</h2>
+            <p id="location">Commune: Villereau (45170)</p>
             <p id="sunrise">Lever du soleil: </p>
             <p id="sunset">Coucher du soleil: </p>
-            <p id="weather">Météo: </p>
         </div>
     </div>
 
@@ -105,8 +105,8 @@
                 <p>Humidité: ${data.main.humidity} %</p>
                 <p>Pression: ${data.main.pressure} hPa</p>
                 <p>Vent: ${data.wind.speed} m/s</p>
+                <p>Couverture nuageuse: ${data.clouds.all} %</p>
             `;
-            document.getElementById('weather').textContent += `${data.weather[0].main}`;
         }
 
         function displayNextForecast(data) {
@@ -134,10 +134,12 @@
                 const sunsetTime = new Date(data.sys.sunset * 1000).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
                 document.getElementById('sunrise').textContent += sunriseTime;
                 document.getElementById('sunset').textContent += sunsetTime;
+                document.getElementById('location').textContent += ` (${data.name}, ${data.sys.country})`;
             } catch (error) {
                 console.error('Erreur lors de la récupération des informations sur le lever et le coucher du soleil:', error);
                 document.getElementById('sunrise').textContent += 'Indisponible';
                 document.getElementById('sunset').textContent += 'Indisponible';
+                document.getElementById('location').textContent += 'Indisponible';
             }
         }
 
