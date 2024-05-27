@@ -21,7 +21,7 @@
             color: #fff;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Centre les éléments verticalement */
+            justify-content: center;
             height: 150px;
             padding: 20px;
         }
@@ -40,8 +40,11 @@
             justify-content: space-between;
             width: 100%;
         }
-        .info span {
-            margin-right: 10px;
+        .info span:first-child {
+            margin-right: 5px; /* Réduire l'espace entre l'étiquette et la valeur */
+        }
+        .info span:last-child {
+            margin-left: auto; /* Aligner les valeurs à droite */
         }
     </style>
 </head>
