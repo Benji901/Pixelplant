@@ -19,18 +19,19 @@
             display: flex;
             flex-direction: column; /* Alignement vertical des éléments */
             align-items: center; /* Centrage horizontal */
+            margin-bottom: 20px; /* Marge basse ajoutée */
         }
         .header {
-            display: flex;
-            justify-content: space-around;
-            align-items: stretch;
             background-color: #00008B; /* Fond bleu foncé */
             color: white;
             padding: 10px;
-            margin-top: 10px; /* Marge haute réduite */
+            display: flex;
+            justify-content: space-around;
+            align-items: stretch;
+            width: 100%; /* Largeur maximale */
         }
         .weather-info, .forecast-box, .additional-info {
-            padding: 5px; /* Réduction du rembourrage */
+            padding: 10px; /* Rembourrage augmenté */
             background-color: white; /* Fond blanc */
             color: #00008B; /* Texte bleu foncé */
             flex: 1;
@@ -48,11 +49,11 @@
     <div class="top-banner">
         <h1>PixelPlant</h1>
         <div id="datetime"></div> <!-- Affichage de l'heure et de la date -->
-        <div class="header">
-            <div class="weather-info" id="current-weather"></div>
-            <div class="forecast-box" id="next-forecast"></div>
-            <div class="additional-info" id="additional-info"></div>
-        </div>
+    </div>
+    <div class="header">
+        <div class="weather-info" id="current-weather"></div>
+        <div class="forecast-box" id="next-forecast"></div>
+        <div class="additional-info" id="additional-info"></div>
     </div>
 
     <script>
@@ -120,8 +121,7 @@
             const forecastInfo = document.getElementById('next-forecast');
             const nextForecast = data.list[0];
             forecastInfo.innerHTML = `
-                <h2>Prochaine prévision</h2
->
+                <h2>Prochaine prévision</h2>
                 <p>${new Date(nextForecast.dt * 1000).toLocaleString('fr-FR', { hour: '2-digit', minute: '2-digit' })}</p>
                 <p>Température: ${nextForecast.main.temp} °C</p>
                 <p>Humidité: ${nextForecast.main.humidity} %</p>
@@ -141,7 +141,6 @@
                 <p>Coucher du soleil: ${sunsetTime}</p>
             `;
         }
-
         // Fonction pour afficher l'heure et la date
         function displayDateTime() {
             const now = new Date();
