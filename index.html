@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Météo à Villereau (45170) - PixelPlant</title>
+    <title>Météo - PixelPlant</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,7 +18,7 @@
             padding: 10px;
             height: 30px; /* Hauteur du bandeau noir */
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
         }
         .header {
@@ -29,7 +29,7 @@
             background-color: #00008B; /* Fond bleu foncé */
             color: white;
             padding: 10px;
-            height: auto; /* Hauteur automatique pour le bandeau bleu foncé */
+            height: 70px; /* Hauteur réduite d'un tiers pour le bandeau bleu foncé */
         }
         .weather-info, .forecast-box, .additional-info {
             margin-top: 20px;
@@ -38,11 +38,15 @@
             color: white;
             width: 250px; /* Largeur réduite pour s'adapter */
         }
+        #datetime {
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="top-banner">
         <h1>PixelPlant</h1>
+        <div id="datetime"></div> <!-- Affichage de l'heure et de la date -->
     </div>
     <div class="header">
         <div id="current-weather" class="weather-info"></div>
@@ -57,7 +61,7 @@
 
     <script>
         const apiKey = '68622df359e1f37849bae38c5fafd8f6';
-        const cityId = '6453974';
+        const cityId = '6453974'; // ID de la commune
         const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?id=${cityId}&appid=${apiKey}&units=metric&lang=fr`;
         const hourlyForecastUrl = `https://api.openweathermap.org/data/2.5/forecast?id=${cityId}&appid=${apiKey}&units=metric&lang=fr`;
 
@@ -135,10 +139,20 @@
                 document.getElementById('location').textContent += 'Indisponible';
             }
         }
+        // Fonction pour afficher l'heure et la date
+        function displayDateTime() {
+            const now = new Date();
+            const datetimeElement = document.getElementById('datetime');
+            const options = { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' };
+            const formattedDateTime = now.toLocaleString('fr-FR', options);
+            datetimeElement.textContent = formattedDateTime;
+        }
 
+        // Appeler les fonctions pour afficher les données
         fetchWeather();
         fetchNextForecast();
         fetchSunTimes();
+        displayDateTime(); // Afficher l'heure et la date actuelles
     </script>
 </body>
 </html>
