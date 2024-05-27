@@ -29,13 +29,16 @@
             color: white;
             padding: 10px;
             margin-top: 20px;
+            margin-bottom: 10px; /* Marge basse ajoutée */
         }
         .weather-info, .forecast-box, .additional-info {
-            padding: 10px;
+            padding: 5px; /* Réduction du rembourrage */
             background-color: white; /* Fond blanc */
             color: #00008B; /* Texte bleu foncé */
             flex: 1;
             margin: 5px;
+            margin-top: 0; /* Suppression de la marge supérieure */
+            margin-bottom: 0; /* Suppression de la marge inférieure */
         }
         #datetime {
             margin-right: 10px;
@@ -110,8 +113,7 @@
                 <p>Température: ${data.main.temp} °C</p>
                 <p>Humidité: ${data.main.humidity} %</p>
                 <p>Pression: ${data.main.pressure} hPa</p>
-                <p>Vent: ${data.wind.speed
-} m/s</p>
+                <p>Vent: ${data.wind.speed} m/s</p>
                 <p>Couverture nuageuse: ${data.clouds.all} %</p>
             `;
         }
@@ -137,8 +139,7 @@
             additionalInfo.innerHTML = `
                 <h2>Informations supplémentaires</h2>
                 <p>Lever du soleil: ${sunriseTime}</p>
-                <p>Coucher du soleil: ${sunsetTime}</p>
-                <p>Commune: Villereau (45170)</p>
+                <p>Coucher du soleil: ${sunsetTime}</
             `;
         }
 
@@ -150,6 +151,7 @@
             const formattedDateTime = now.toLocaleString('fr-FR', options);
             datetimeElement.textContent = formattedDateTime;
         }
+
         // Appeler les fonctions pour afficher les données
         fetchWeather();
         fetchNextForecast();
