@@ -19,6 +19,7 @@
         <div id="cloudiness" style="font-family: 'Glacial Indifference', sans-serif; font-size: 0.9em;">Couverture nuageuse: </div>
         <div id="wind-speed" style="font-family: 'Glacial Indifference', sans-serif; font-size: 0.9em;">Vitesse du vent: </div>
         <div id="wind-direction" style="font-family: 'Glacial Indifference', sans-serif; font-size: 0.9em;">Direction du vent: </div>
+        <div id="rain" style="font-family: 'Glacial Indifference', sans-serif; font-size: 0.9em;">Pluie dans l'heure: </div>
     </div>
 
     <script>
@@ -41,6 +42,11 @@
                 document.getElementById('cloudiness').textContent += `${data.clouds.all}%`;
                 document.getElementById('wind-speed').textContent += `${data.wind.speed} km/h`;
                 document.getElementById('wind-direction').textContent += `${convertWindDirection(data.wind.deg)}`;
+                if (data.rain && data.rain['1h']) {
+                    document.getElementById('rain').textContent += `${data.rain['1h']} mm`;
+                } else {
+                    document.getElementById('rain').textContent += `Pas de pluie prévue`;
+                }
             })
             .catch(error => console.error('Erreur lors de la récupération des données météorologiques :', error));
 
@@ -56,3 +62,4 @@
     </script>
 </body>
 </html>
+
