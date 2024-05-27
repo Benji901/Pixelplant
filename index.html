@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Météo à Villereau (45170)</title>
+    <!-- Style pour le fond bleu clair et les éléments de texte centrés -->
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
+            background-color: #ADD8E6; /* Couleur de fond bleu clair */
             margin: 20px;
         }
         .weather-info {
@@ -16,18 +18,29 @@
     </style>
 </head>
 <body>
+    <!-- Titre de la page -->
     <h1>Météo à Villereau (45170)</h1>
+    <!-- Div pour afficher la date et l'heure actuelles -->
+    <div id="current-time" class="weather-info"></div>
+    <!-- Div pour afficher les informations météorologiques actuelles -->
     <div id="current-weather" class="weather-info">
         <p>Chargement des données météorologiques...</p>
     </div>
+    <!-- Div pour afficher les prévisions horaires -->
     <div id="hourly-forecast" class="weather-info"></div>
 
+    <!-- Script JavaScript pour récupérer et afficher les données météorologiques -->
     <script>
-        const apiKey = '68622df359e1f37849bae38c5fafd8f6'; // Votre clé API OpenWeatherMap
-        const cityId = '6453974'; // ID de la ville Villereau (45170)
+        // Clé API OpenWeatherMap
+        const apiKey = '68622df359e1f37849bae38c5fafd8f6';
+        // ID de la ville Villereau (45170)
+        const cityId = '6453974';
+        // URL pour obtenir les données météorologiques actuelles
         const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?id=${cityId}&appid=${apiKey}&units=metric&lang=fr`;
+        // URL pour obtenir les prévisions horaires
         const hourlyForecastUrl = `https://api.openweathermap.org/data/2.5/forecast?id=${cityId}&appid=${apiKey}&units=metric&lang=fr`;
 
+        // Fonction pour récupérer et afficher les données météorologiques actuelles
         async function fetchWeather() {
             try {
                 const response = await fetch(currentWeatherUrl);
@@ -42,6 +55,7 @@
             }
         }
 
+        // Fonction pour récupérer et afficher les prévisions horaires
         async function fetchHourlyForecast() {
             try {
                 const response = await fetch(hourlyForecastUrl);
@@ -56,6 +70,7 @@
             }
         }
 
+        // Fonction pour afficher les données météorologiques actuelles
         function displayCurrentWeather(data) {
             const weatherInfo = document.getElementById('current-weather');
             weatherInfo.innerHTML = `
@@ -66,9 +81,11 @@
             `;
         }
 
+        // Fonction pour afficher les prévisions horaires
         function displayHourlyForecast(data) {
             const forecastInfo = document.getElementById('hourly-forecast');
             let forecastHTML = '<h2>Prévisions horaires</h2>';
+            // Limite à 5 prévisions horaires pour l'affichage
             data.list.slice(0, 5).forEach(forecast => {
                 forecastHTML += `
                     <div>
@@ -81,9 +98,19 @@
             forecastInfo.innerHTML = forecastHTML;
         }
 
+        // Fonction pour afficher l'heure et la date actuelles
+        function displayCurrentTime() {
+            const now = new Date();
+            const currentTime = now.toLocaleString('fr-FR', { dateStyle: 'full', timeStyle: 'short' });
+            document.getElementById('current-time').innerHTML = `<p>${currentTime}</p>`;
+        }
+
+        // Appel des fonctions pour récupérer les données et afficher l'heure actuelle
         fetchWeather();
         fetchHourlyForecast();
+        displayCurrentTime();
+        // Mise à jour de l'heure et de la date toutes les minutes
+        setInterval(displayCurrentTime, 60000);
     </script>
 </body>
 </html>
-
