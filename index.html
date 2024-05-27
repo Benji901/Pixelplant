@@ -14,6 +14,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 20px;
+            height: 50px;
         }
         .bandeau-meteo {
             background-color: #00008B;
@@ -35,11 +36,17 @@
         }
         .info {
             font-size: 0.9em;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .info span {
+            margin-right: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="bandeau" style="background-color: #000; color: #fff; height: 50px;">
+    <div class="bandeau" style="background-color: #000; color: #fff;">
         <div style="font-weight: bold; font-size: 1.2em;">PixelPlant</div>
         <div id="datetime" style="font-size: 0.8em;"></div>
     </div>
@@ -47,14 +54,14 @@
     <div id="weather" class="bandeau-meteo">
         <div class="encart-meteo">
             <div class="titre">Météo actuelle:</div>
-            <div id="temperature" class="info">Température: </div>
-            <div id="pressure" class="info">Pression atmosphérique: </div>
-            <div id="humidity" class="info">Humidité: </div>
-            <div id="dew-point" class="info">Point de rosée: </div>
-            <div id="cloudiness" class="info">Couverture nuageuse: </div>
-            <div id="wind-speed" class="info">Vitesse du vent: </div>
-            <div id="wind-direction" class="info">Direction du vent: </div>
-            <div id="rain" class="info">Pluie dans l'heure: </div>
+            <div class="info"><span>Température:</span> <span id="temperature"></span></div>
+            <div class="info"><span>Pression atmosphérique:</span> <span id="pressure"></span></div>
+            <div class="info"><span>Humidité:</span> <span id="humidity"></span></div>
+            <div class="info"><span>Point de rosée:</span> <span id="dew-point"></span></div>
+            <div class="info"><span>Couverture nuageuse:</span> <span id="cloudiness"></span></div>
+            <div class="info"><span>Vitesse du vent:</span> <span id="wind-speed"></span></div>
+            <div class="info"><span>Direction du vent:</span> <span id="wind-direction"></span></div>
+            <div class="info"><span>Pluie dans l'heure:</span> <span id="rain"></span></div>
         </div>
     </div>
 
@@ -84,17 +91,17 @@
             .then(data => {
                 const temperature = data.main.temp;
                 const humidity = data.main.humidity;
-                document.getElementById('temperature').textContent += `${temperature} °C`;
-                document.getElementById('pressure').textContent += `${data.main.pressure} hPa`;
-                document.getElementById('humidity').textContent += `${humidity} %`;
-                document.getElementById('dew-point').textContent += `${calculateDewPoint(temperature, humidity)} °C`;
-                document.getElementById('cloudiness').textContent += `${data.clouds.all}%`;
-                document.getElementById('wind-speed').textContent += `${data.wind.speed} km/h`;
-                document.getElementById('wind-direction').textContent += `${convertWindDirection(data.wind.deg)}`;
+                document.getElementById('temperature').textContent = `${temperature} °C`;
+                document.getElementById('pressure').textContent = `${data.main.pressure} hPa`;
+                document.getElementById('humidity').textContent = `${humidity} %`;
+                document.getElementById('dew-point').textContent = `${calculateDewPoint(temperature, humidity)} °C`;
+                document.getElementById('cloudiness').textContent = `${data.clouds.all}%`;
+                document.getElementById('wind-speed').textContent = `${data.wind.speed} km/h`;
+                document.getElementById('wind-direction').textContent = `${convertWindDirection(data.wind.deg)}`;
                 if (data.rain && data.rain['1h']) {
-                    document.getElementById('rain').textContent += `${data.rain['1h']} mm`;
+                    document.getElementById('rain').textContent = `${data.rain['1h']} mm`;
                 } else {
-                    document.getElementById('rain').textContent += `Pas de pluie prévue`;
+                    document.getElementById('rain').textContent = `Pas de pluie prévue`;
                 }
             })
             .catch(error => console.error('Erreur lors de la récupération des données météorologiques :', error));
