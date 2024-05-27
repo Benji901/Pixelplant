@@ -22,6 +22,13 @@
     </div>
 
     <script>
+        // Fonction pour convertir la direction du vent en abréviation
+        function convertWindDirection(degrees) {
+            const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+            const index = Math.round(degrees / 45) % 8;
+            return directions[index];
+        }
+
         // Requête à l'API OpenWeatherMap
         const apiKey = "68622df359e1f37849bae38c5fafd8f6";
         const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=Villereau,FR&units=metric&appid=${apiKey}`;
@@ -33,7 +40,7 @@
                 document.getElementById('pressure').textContent += `${data.main.pressure} hPa`;
                 document.getElementById('cloudiness').textContent += `${data.clouds.all}%`;
                 document.getElementById('wind-speed').textContent += `${data.wind.speed} km/h`;
-                document.getElementById('wind-direction').textContent += `${data.wind.deg}`;
+                document.getElementById('wind-direction').textContent += `${convertWindDirection(data.wind.deg)}`;
             })
             .catch(error => console.error('Erreur lors de la récupération des données météorologiques :', error));
 
