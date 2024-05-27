@@ -97,7 +97,7 @@
         function displayCurrentWeather(data) {
             const weatherInfo = document.getElementById('current-weather');
             weatherInfo.innerHTML = `
-                <p>Température: ${data.main.temp} °C | Humidité: ${data.main.humidity} % | Pression: ${data.main.pressure} hPa | Vent: ${data.wind.speed} m/s ${getWindDirection(data.wind.deg)}</p>
+                <p>Température: ${data.main.temp} °C | Humidité: ${data.main.humidity} % | Pression: ${data.main.pressure} hPa | Vent: ${data.wind.speed} m/s ${getWindDirection(data.wind.deg)} | Couverture nuageuse: ${data.clouds.all} %</p>
             `;
         }
 
@@ -107,8 +107,7 @@
             const nextForecast = data.list[0];
             forecastInfo.innerHTML = `
                 <h2>Prochaine prévision</h2>
-                <p>${new Date(nextForecast.dt * 1000).toLocaleString('fr-FR', { hour: '2-digit', minute: '2-digit' })}</p>
-                <p>Température: ${nextForecast.main.temp} °C | Humidité: ${nextForecast.main.humidity} % | Pression: ${nextForecast.main.pressure} hPa | Vent: ${nextForecast.wind.speed} m/s ${getWindDirection(nextForecast.wind.deg)}</p>
+                <p>${new Date(nextForecast.dt * 1000).toLocaleString('fr-FR', { hour: '2-digit', minute: '2-digit' })} | Température: ${nextForecast.main.temp} °C | Humidité: ${nextForecast.main.humidity} % | Pression: ${nextForecast.main.pressure} hPa | Vent: ${nextForecast.wind.speed} m/s ${getWindDirection(nextForecast.wind.deg)} | Couverture nuageuse: ${nextForecast.clouds.all} %</p>
             `;
         }
 
