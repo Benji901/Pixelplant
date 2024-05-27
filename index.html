@@ -16,6 +16,8 @@
         <div style="font-family: 'Glacial Indifference', sans-serif; font-size: 1.1em; margin-bottom: 10px;">Météo actuelle:</div>
         <div id="temperature" style="font-family: 'Glacial Indifference', sans-serif; font-size: 0.9em;">Température: </div>
         <div id="pressure" style="font-family: 'Glacial Indifference', sans-serif; font-size: 0.9em;">Pression atmosphérique: </div>
+        <div id="humidity" style="font-family: 'Glacial Indifference', sans-serif; font-size: 0.9em;">Humidité: </div>
+        <div id="dew-point" style="font-family: 'Glacial Indifference', sans-serif; font-size: 0.9em;">Point de rosée: </div>
         <div id="cloudiness" style="font-family: 'Glacial Indifference', sans-serif; font-size: 0.9em;">Couverture nuageuse: </div>
         <div id="wind-speed" style="font-family: 'Glacial Indifference', sans-serif; font-size: 0.9em;">Vitesse du vent: </div>
         <div id="wind-direction" style="font-family: 'Glacial Indifference', sans-serif; font-size: 0.9em;">Direction du vent: </div>
@@ -30,6 +32,15 @@
             return directions[index];
         }
 
+        // Fonction pour calculer le point de rosée
+        function calculateDewPoint(temperature, humidity) {
+            const a = 17.27;
+            const b = 237.7;
+            const alpha = ((a * temperature) / (b + temperature)) + Math.log(humidity / 100);
+            const dewPoint = (b * alpha) / (a - alpha);
+            return dewPoint.toFixed(2); // Renvoie le point de rosée avec 2 décimales
+        }
+
         // Requête à l'API OpenWeatherMap
         const apiKey = "68622df359e1f37849bae38c5fafd8f6";
         const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=Villereau,FR&units=metric&appid=${apiKey}`;
@@ -37,8 +48,12 @@
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
-                document.getElementById('temperature').textContent += `${data.main.temp} °C`;
+                const temperature = data.main.temp;
+                const humidity = data.main.humidity;
+                document.getElementById('temperature').textContent += `${temperature} °C`;
                 document.getElementById('pressure').textContent += `${data.main.pressure} hPa`;
+                document.getElementById('humidity').textContent += `${humidity} %`;
+                document.getElementById('dew-point').textContent += `${calculateDewPoint(temperature, humidity)} °C`;
                 document.getElementById('cloudiness').textContent += `${data.clouds.all}%`;
                 document.getElementById('wind-speed').textContent += `${data.wind.speed} km/h`;
                 document.getElementById('wind-direction').textContent += `${convertWindDirection(data.wind.deg)}`;
@@ -62,4 +77,3 @@
     </script>
 </body>
 </html>
-
