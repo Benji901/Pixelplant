@@ -14,6 +14,9 @@
             padding: 0;
         }
         .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             background-color: #00008B; /* Couleur de fond bleu foncé */
             color: white;
             padding: 20px;
@@ -21,17 +24,24 @@
         .weather-info {
             margin: 20px 0;
         }
+        .forecast-box {
+            border: 2px solid black; /* Encadré noir */
+            padding: 10px;
+            background-color: white;
+            color: black;
+        }
     </style>
 </head>
 <body>
     <!-- Bandeau bleu foncé en haut de la page -->
     <div class="header">
-        <h1>Météo à Villereau (45170)</h1>
-        <div id="current-time"></div>
-        <div id="current-weather"></div>
+        <div>
+            <h1>Météo à Villereau (45170)</h1>
+            <div id="current-time"></div>
+            <div id="current-weather"></div>
+        </div>
+        <div id="next-forecast" class="forecast-box"></div>
     </div>
-    <!-- Div pour afficher les prévisions horaires -->
-    <div id="hourly-forecast" class="weather-info"></div>
 
     <!-- Script JavaScript pour récupérer et afficher les données météorologiques -->
     <script>
@@ -59,18 +69,18 @@
             }
         }
 
-        // Fonction pour récupérer et afficher les prévisions horaires
-        async function fetchHourlyForecast() {
+        // Fonction pour récupérer et afficher la prochaine prévision
+        async function fetchNextForecast() {
             try {
                 const response = await fetch(hourlyForecastUrl);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
-                displayHourlyForecast(data);
+                displayNextForecast(data);
             } catch (error) {
                 console.error('Erreur lors de la récupération des prévisions horaires:', error);
-                document.getElementById('hourly-forecast').innerHTML = '<p>Erreur lors de la récupération des prévisions horaires.</p>';
+                document.getElementById('next-forecast').innerHTML = '<p>Erreur lors de la récupération des prévisions horaires.</p>';
             }
         }
 
@@ -82,21 +92,16 @@
             `;
         }
 
-        // Fonction pour afficher les prévisions horaires
-        function displayHourlyForecast(data) {
-            const forecastInfo = document.getElementById('hourly-forecast');
-            let forecastHTML = '<h2>Prévisions horaires</h2>';
-            // Limite à 5 prévisions horaires pour l'affichage
-            data.list.slice(0, 5).forEach(forecast => {
-                forecastHTML += `
-                    <div>
-                        <p>${new Date(forecast.dt * 1000).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}</p>
-                        <p>Température: ${forecast.main.temp} °C</p>
-                        <p>Description: ${forecast.weather[0].description}</p>
-                    </div>
-                `;
-            });
-            forecastInfo.innerHTML = forecastHTML;
+        // Fonction pour afficher la prochaine prévision
+        function displayNextForecast(data) {
+            const forecastInfo = document.getElementById('next-forecast');
+            const nextForecast = data.list[0];
+            forecastInfo.innerHTML = `
+                <h2>Prochaine prévision</h2>
+                <p>${new Date(nextForecast.dt * 1000).toLocaleString('fr-FR', { hour: '2-digit', minute: '2-digit' })}</p>
+                <p>Température: ${nextForecast.main.temp} °C</p>
+                <p>Description: ${nextForecast.weather[0].description}</p>
+            `;
         }
 
         // Fonction pour afficher l'heure et la date actuelles
@@ -115,7 +120,7 @@
 
         // Appel des fonctions pour récupérer les données et afficher l'heure actuelle
         fetchWeather();
-        fetchHourlyForecast();
+        fetchNextForecast();
         displayCurrentTime();
         // Mise à jour de l'heure et de la date toutes les minutes
         setInterval(displayCurrentTime, 60000);
