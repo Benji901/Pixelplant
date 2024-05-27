@@ -3,159 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Météo - PixelPlant</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #000; /* Fond noir */
-            margin: 0;
-            padding: 0;
-        }
-        .top-banner {
-            color: white;
-            padding: 10px;
-            display: flex;
-            flex-direction: column; /* Alignement vertical des éléments */
-            align-items: center; /* Centrage horizontal */
-            margin-bottom: 20px; /* Marge basse ajoutée */
-        }
-        .header {
-            background-color: #00008B; /* Fond bleu foncé */
-            color: white;
-            padding: 10px;
-            display: flex;
-            justify-content: space-around;
-            align-items: stretch;
-            width: 100%; /* Largeur maximale */
-        }
-        .weather-info, .forecast-box, .additional-info {
-            padding: 10px; /* Rembourrage augmenté */
-            background-color: white; /* Fond blanc */
-            color: #00008B; /* Texte bleu foncé */
-            flex: 1;
-            margin: 5px;
-            margin-top: 0; /* Suppression de la marge supérieure */
-            margin-bottom: 0; /* Suppression de la marge inférieure */
-        }
-        #datetime {
-            margin-right: 10px;
-            color: white; /* Texte blanc */
-        }
-    </style>
+    <title>Bandeau PixelPlant</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Lien vers le fichier CSS -->
 </head>
 <body>
-    <div class="top-banner">
-        <h1>PixelPlant</h1>
-        <div id="datetime"></div> <!-- Affichage de l'heure et de la date -->
-    </div>
-    <div class="header">
-        <div class="weather-info" id="current-weather"></div>
-        <div class="forecast-box" id="next-forecast"></div>
-        <div class="additional-info" id="additional-info"></div>
+    <div class="bandeau">
+        <div class="left">PixelPlant</div> <!-- Partie gauche du bandeau -->
+        <div class="right" id="datetime"></div> <!-- Partie droite avec la date et l'heure -->
     </div>
 
     <script>
-        const apiKey = '68622df359e1f37849bae38c5fafd8f6';
-        const cityId = '6453974'; // ID de la commune
-        const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?id=${cityId}&appid=${apiKey}&units=metric&lang=fr`;
-        const hourlyForecastUrl = `https://api.openweathermap.org/data/2.5/forecast?id=${cityId}&appid=${apiKey}&units=metric&lang=fr`;
-
-        async function fetchWeather() {
-            try {
-                const response = await fetch(currentWeatherUrl);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                displayCurrentWeather(data);
-            } catch (error) {
-                console.error('Erreur lors de la récupération des données météorologiques:', error);
-                document.getElementById('current-weather').innerHTML = '<p>Erreur lors de la récupération des données météorologiques.</p>';
-            }
-        }
-
-        async function fetchNextForecast() {
-            try {
-                const response = await fetch(hourlyForecastUrl);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                displayNextForecast(data);
-            } catch (error) {
-                console.error('Erreur lors de la récupération des prévisions horaires:', error);
-                document.getElementById('next-forecast').innerHTML = '<p>Erreur lors de la récupération des prévisions horaires.</p>';
-            }
-        }
-
-        async function fetchSunTimes() {
-            try {
-                const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?id=${cityId}&appid=${apiKey}&units=metric`);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                displaySunTimes(data);
-            } catch (error) {
-                console.error('Erreur lors de la récupération des informations sur le lever et le coucher du soleil:', error);
-                document.getElementById('additional-info').innerHTML += '<p>Informations sur le lever et le coucher du soleil indisponibles.</p>';
-            }
-        }
-
-        function displayCurrentWeather(data) {
-            const weatherInfo = document.getElementById('current-weather');
-            weatherInfo.innerHTML = `
-                <h2>Météo actuelle</h2>
-                <p>Description: ${data.weather[0].description}</p>
-                <p>Température: ${data.main.temp} °C</p>
-                <p>Humidité: ${data.main.humidity} %</p>
-                <p>Pression: ${data.main.pressure} hPa</p>
-                <p>Vent: ${data.wind.speed} m/s</p>
-                <p>Couverture nuageuse: ${data.clouds.all} %</p>
-            `;
-        }
-
-        function displayNextForecast(data) {
-            const forecastInfo = document.getElementById('next-forecast');
-            const nextForecast = data.list[0];
-            forecastInfo.innerHTML = `
-                <h2>Prochaine prévision</h2>
-                <p>${new Date(nextForecast.dt * 1000).toLocaleString('fr-FR', { hour: '2-digit', minute: '2-digit' })}</p>
-                <p>Température: ${nextForecast.main.temp} °C</p>
-                <p>Humidité: ${nextForecast.main.humidity} %</p>
-                <p>Pression: ${nextForecast.main.pressure} hPa</p>
-                <p>Vent: ${nextForecast.wind.speed} m/s</p>
-                <p>Couverture nuageuse: ${nextForecast.clouds.all} %</p>
-            `;
-        }
-
-        function displaySunTimes(data) {
-            const additionalInfo = document.getElementById('additional-info');
-            const sunriseTime = new Date(data.sys.sunrise * 1000).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-            const sunsetTime = new Date(data.sys.sunset * 1000).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-            additionalInfo.innerHTML = `
-                <h2>Informations supplémentaires</h2>
-                <p>Lever du soleil: ${sunriseTime}</p>
-                <p>Coucher du soleil: ${sunsetTime}</p>
-            `;
-        }
-
-        // Fonction pour afficher l'heure et la date
+        // JavaScript pour afficher la date et l'heure
         function displayDateTime() {
             const now = new Date();
             const datetimeElement = document.getElementById('datetime');
-            const options = { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '
-2-digit', year: 'numeric' };
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
             const formattedDateTime = now.toLocaleString('fr-FR', options);
             datetimeElement.textContent = formattedDateTime;
         }
-
-        // Appeler les fonctions pour afficher les données
-        fetchWeather();
-        fetchNextForecast();
-        fetchSunTimes();
-        displayDateTime(); // Afficher l'heure et la date actuelles
+        displayDateTime(); // Appel de la fonction pour afficher la date et l'heure actuelles
     </script>
 </body>
 </html>
