@@ -17,24 +17,25 @@
             background-color: #000; /* Couleur de fond noir */
             color: white;
             padding: 10px;
+            height: 40px; /* Hauteur réduite pour le bandeau noir */
         }
         .header {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column; /* Contenu empilé verticalement */
             align-items: center;
             background-color: #00008B; /* Couleur de fond bleu foncé */
             color: white;
             padding: 20px;
-            height: 123px; /* Hauteur réduite en fonction du nombre d'or */
         }
-        .weather-info {
-            margin: 20px 0;
+        .weather-info, .forecast-box {
+            margin-top: 20px; /* Espacement entre les sections */
         }
         .forecast-box {
             border: 2px solid black; /* Encadré noir */
             padding: 10px;
             background-color: white;
             color: black;
+            width: 80%; /* Largeur réduite pour la prévision */
         }
     </style>
 </head>
@@ -43,13 +44,11 @@
     <div class="top-banner">
         <h1>PixelPlant</h1>
     </div>
-    <!-- Bandeau bleu foncé en dessous du bandeau noir -->
+    <!-- Bandeau bleu foncé avec les informations météo -->
     <div class="header">
-        <div>
-            <h1>Météo à Villereau (45170)</h1>
-            <div id="current-time"></div>
-            <div id="current-weather"></div>
-        </div>
+        <h1>Météo à Villereau (45170)</h1>
+        <div id="current-time"></div>
+        <div id="current-weather" class="weather-info"></div>
         <div id="next-forecast" class="forecast-box"></div>
     </div>
 
@@ -109,8 +108,7 @@
             forecastInfo.innerHTML = `
                 <h2>Prochaine prévision</h2>
                 <p>${new Date(nextForecast.dt * 1000).toLocaleString('fr-FR', { hour: '2-digit', minute: '2-digit' })}</p>
-                <p>Température: ${nextForecast.main.temp} °C</p>
-                <p>Description: ${nextForecast.weather[0].description}</p>
+                <p>Température: ${nextForecast.main.temp} °C | Humidité: ${nextForecast.main.humidity} % | Pression: ${nextForecast.main.pressure} hPa | Vent: ${nextForecast.wind.speed} m/s ${getWindDirection(nextForecast.wind.deg)}</p>
             `;
         }
 
