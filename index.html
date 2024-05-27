@@ -5,23 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bandeau Météo</title>
     <link href="https://fonts.googleapis.com/css2?family=Glacial+Indifference&display=swap" rel="stylesheet"> <!-- Lien vers la police de caractères Glacial Indifference -->
+    <style>
+        body {
+            font-family: 'Glacial Indifference', sans-serif;
+        }
+        .bandeau {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        .bandeau-meteo {
+            background-color: #00008B;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centre les éléments verticalement */
+            height: 150px;
+            padding: 20px;
+        }
+        .encart-meteo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .titre {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        .info {
+            font-size: 0.9em;
+        }
+    </style>
 </head>
 <body>
-    <div class="bandeau" style="background-color: #000; color: #fff; display: flex; justify-content: space-between; align-items: center; height: 50px; padding: 0 20px;">
-        <div style="font-weight: bold; font-size: 1.2em; font-family: 'Glacial Indifference', sans-serif;">PixelPlant</div>
-        <div id="datetime" style="font-family: 'Glacial Indifference', sans-serif; font-size: 0.8em;"></div>
+    <div class="bandeau" style="background-color: #000; color: #fff; height: 50px;">
+        <div style="font-weight: bold; font-size: 1.2em;">PixelPlant</div>
+        <div id="datetime" style="font-size: 0.8em;"></div>
     </div>
 
-    <div id="weather" class="bandeau" style="background-color: #00008B; color: #fff; display: flex; flex-direction: column; align-items: flex-start; height: 150px; padding: 20px;">
-        <div style="font-family: 'Glacial Indifference', sans-serif; font-size: 1.1em; margin-bottom: 10px;">Météo actuelle:</div>
-        <div id="temperature" style="font-family: 'Glacial Indifference', sans-serif; font-size: 0.9em;">Température: </div>
-        <div id="pressure" style="font-family: 'Glacial Indifference', sans-serif; font-size: 0.9em;">Pression atmosphérique: </div>
-        <div id="humidity" style="font-family: 'Glacial Indifference', sans-serif; font-size: 0.9em;">Humidité: </div>
-        <div id="dew-point" style="font-family: 'Glacial Indifference', sans-serif; font-size: 0.9em;">Point de rosée: </div>
-        <div id="cloudiness" style="font-family: 'Glacial Indifference', sans-serif; font-size: 0.9em;">Couverture nuageuse: </div>
-        <div id="wind-speed" style="font-family: 'Glacial Indifference', sans-serif; font-size: 0.9em;">Vitesse du vent: </div>
-        <div id="wind-direction" style="font-family: 'Glacial Indifference', sans-serif; font-size: 0.9em;">Direction du vent: </div>
-        <div id="rain" style="font-family: 'Glacial Indifference', sans-serif; font-size: 0.9em;">Pluie dans l'heure: </div>
+    <div id="weather" class="bandeau-meteo">
+        <div class="encart-meteo">
+            <div class="titre">Météo actuelle:</div>
+            <div id="temperature" class="info">Température: </div>
+            <div id="pressure" class="info">Pression atmosphérique: </div>
+            <div id="humidity" class="info">Humidité: </div>
+            <div id="dew-point" class="info">Point de rosée: </div>
+            <div id="cloudiness" class="info">Couverture nuageuse: </div>
+            <div id="wind-speed" class="info">Vitesse du vent: </div>
+            <div id="wind-direction" class="info">Direction du vent: </div>
+            <div id="rain" class="info">Pluie dans l'heure: </div>
+        </div>
     </div>
 
     <script>
