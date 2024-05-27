@@ -3,60 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bandeau Météo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Glacial+Indifference&display=swap" rel="stylesheet"> <!-- Lien vers la police de caractères Glacial Indifference -->
+    <title>PixelPlant - Météo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Glacial+Indifference&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Glacial Indifference', sans-serif;
+            margin: 0;
+            padding: 0;
         }
         .bandeau {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background-color: #000;
+            color: #fff;
             padding: 0 20px;
             height: 50px;
         }
         .bandeau-meteo {
             background-color: #00008B;
             color: #fff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            height: 150px;
             padding: 20px;
-        }
-        .encart-meteo {
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
+            justify-content: space-between;
+            height: 100px;
+        }
+        .encart-meteo, .encart-prevision {
+            background-color: #fff;
+            color: #000;
+            padding: 10px;
+            margin: 5px;
+            flex: 1;
         }
         .titre {
-            font-size: 1.1em;
+            font-size: 1.2em;
             margin-bottom: 10px;
         }
         .info {
             font-size: 0.9em;
             display: flex;
             justify-content: space-between;
-            width: 100%;
+            margin-bottom: 5px;
         }
-        .info span:first-child {
-            margin-right: 5px; /* Réduire l'espace entre l'étiquette et la valeur */
-        }
-        .info span:last-child {
-            margin-left: auto; /* Aligner les valeurs à droite */
+        #datetime {
+            font-size: 0.8em;
         }
     </style>
 </head>
 <body>
-    <div class="bandeau" style="background-color: #000; color: #fff;">
+    <div class="bandeau">
         <div style="font-weight: bold; font-size: 1.2em;">PixelPlant</div>
-        <div id="datetime" style="font-size: 0.8em;"></div>
+        <div id="datetime"></div>
     </div>
 
-    <div id="weather" class="bandeau-meteo">
+    <div class="bandeau-meteo">
         <div class="encart-meteo">
-            <div class="titre">Météo actuelle:</div>
+            <div class="titre">Météo actuelle</div>
             <div class="info"><span>Température:</span> <span id="temperature"></span></div>
             <div class="info"><span>Pression atmosphérique:</span> <span id="pressure"></span></div>
             <div class="info"><span>Humidité:</span> <span id="humidity"></span></div>
@@ -113,11 +115,13 @@
         function displayDateTime() {
             const now = new Date();
             const datetimeElement = document.getElementById('datetime');
-            const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false };
-            const formattedDateTime = now.toLocaleString('fr-FR', options);
-            datetimeElement.textContent = formattedDateTime;
+            const formattedDate = now.toLocaleDateString('fr-FR');
+            const formattedTime = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+            datetimeElement.textContent = `${formattedTime} - ${formattedDate}`;
         }
+
         displayDateTime(); // Appel de la fonction pour afficher la date et l'heure actuelles
+        setInterval(displayDateTime, 60000); // Mise à jour de la date et de l'heure chaque minute
     </script>
 </body>
 </html>
