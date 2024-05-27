@@ -3,62 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PixelPlant - Météo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Glacial+Indifference&display=swap" rel="stylesheet">
+    <title>Bandeau Météo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Glacial+Indifference&display=swap" rel="stylesheet"> <!-- Lien vers la police de caractères Glacial Indifference -->
     <style>
         body {
             font-family: 'Glacial Indifference', sans-serif;
-            margin: 0;
-            padding: 0;
         }
         .bandeau {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #000;
-            color: #fff;
             padding: 0 20px;
-            height: 50px;
         }
         .bandeau-meteo {
             background-color: #00008B;
             color: #fff;
-            padding: 20px;
             display: flex;
-            justify-content: space-between;
-            height: 100px;
+            flex-direction: column;
+            justify-content: center; /* Centre les éléments verticalement */
+            height: 150px;
+            padding: 20px;
         }
-        .encart-meteo, .encart-prevision {
-            background-color: #fff;
-            color: #000;
-            padding: 10px;
-            margin: 5px;
-            flex: 1;
+        .encart-meteo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
         .titre {
-            font-size: 1.2em;
+            font-size: 1.1em;
             margin-bottom: 10px;
         }
         .info {
             font-size: 0.9em;
             display: flex;
-            justify-content: space-between;
+            align-items: center;
             margin-bottom: 5px;
         }
-        #datetime {
-            font-size: 0.8em;
+        .info span {
+            margin-right: 10px; /* Espacement entre l'énoncé et la valeur */
         }
     </style>
 </head>
 <body>
-    <div class="bandeau">
+    <div class="bandeau" style="background-color: #000; color: #fff; height: 50px;">
         <div style="font-weight: bold; font-size: 1.2em;">PixelPlant</div>
-        <div id="datetime"></div>
+        <div id="datetime" style="font-size: 0.8em;"></div>
     </div>
 
-    <div class="bandeau-meteo">
+    <div id="weather" class="bandeau-meteo">
         <div class="encart-meteo">
-            <div class="titre">Météo actuelle</div>
+            <div class="titre">Météo actuelle:</div>
             <div class="info"><span>Température:</span> <span id="temperature"></span></div>
             <div class="info"><span>Pression atmosphérique:</span> <span id="pressure"></span></div>
             <div class="info"><span>Humidité:</span> <span id="humidity"></span></div>
@@ -98,30 +92,4 @@
                 const humidity = data.main.humidity;
                 document.getElementById('temperature').textContent = `${temperature} °C`;
                 document.getElementById('pressure').textContent = `${data.main.pressure} hPa`;
-                document.getElementById('humidity').textContent = `${humidity} %`;
-                document.getElementById('dew-point').textContent = `${calculateDewPoint(temperature, humidity)} °C`;
-                document.getElementById('cloudiness').textContent = `${data.clouds.all}%`;
-                document.getElementById('wind-speed').textContent = `${data.wind.speed} km/h`;
-                document.getElementById('wind-direction').textContent = `${convertWindDirection(data.wind.deg)}`;
-                if (data.rain && data.rain['1h']) {
-                    document.getElementById('rain').textContent = `${data.rain['1h']} mm`;
-                } else {
-                    document.getElementById('rain').textContent = `Pas de pluie prévue`;
-                }
-            })
-            .catch(error => console.error('Erreur lors de la récupération des données météorologiques :', error));
-
-        // JavaScript pour afficher la date et l'heure
-        function displayDateTime() {
-            const now = new Date();
-            const datetimeElement = document.getElementById('datetime');
-            const formattedDate = now.toLocaleDateString('fr-FR');
-            const formattedTime = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-            datetimeElement.textContent = `${formattedTime} - ${formattedDate}`;
-        }
-
-        displayDateTime(); // Appel de la fonction pour afficher la date et l'heure actuelles
-        setInterval(displayDateTime, 60000); // Mise à jour de la date et de l'heure chaque minute
-    </script>
-</body>
-</html>
+                document.getElementById('humidity').textContent = `${humidity}
