@@ -29,22 +29,14 @@
             background-color: #00008B; /* Fond bleu foncé */
             color: white;
             padding: 10px;
-            height: 150px; /* Hauteur réduite de l'encart bleu foncé */
+            height: auto; /* Hauteur automatique pour le bandeau bleu foncé */
         }
-        .weather-info, .forecast-box {
+        .weather-info, .forecast-box, .additional-info {
             margin-top: 20px;
-        }
-        .forecast-box, .current-weather-box {
-            border: 2px solid black;
             padding: 10px;
-            background-color: white;
-            color: black;
-            width: 200px; /* Largeur réduite de l'encart */
-        }
-        .additional-info {
-            text-align: left;
-            padding: 10px;
-            width: 300px; /* Largeur réduite pour s'adapter */
+            background-color: #00008B; /* Fond bleu foncé */
+            color: white;
+            width: 250px; /* Largeur réduite pour s'adapter */
         }
     </style>
 </head>
@@ -53,7 +45,7 @@
         <h1>PixelPlant</h1>
     </div>
     <div class="header">
-        <div id="current-weather" class="current-weather-box"></div>
+        <div id="current-weather" class="weather-info"></div>
         <div id="next-forecast" class="forecast-box"></div>
         <div class="additional-info">
             <h2>Informations supplémentaires</h2>
