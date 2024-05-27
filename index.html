@@ -1,21 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Site Personnel</title>
+    <title>Météo à Villereau (45170)</title>
     <style>
-        body { font-family: futura, sans-serif; }
-        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
-        h1 { color: #333; }
-        p { line-height: 1.6; }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .weather-info {
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Bienvenue sur mon site personnel</h1>
-        <p>Ceci est une page web hébergée sur GitHub Pages.</p>
-        <p>Vous pouvez mettre à jour ce contenu en modifiant le fichier <code>index.html</code> dans votre dépôt GitHub.</p>
+    <h1>Météo à Villereau (45170)</h1>
+    <div id="current-weather" class="weather-info">
+        <p>Chargement des données météorologiques...</p>
     </div>
+    <div id="hourly-forecast" class="weather-info"></div>
+
+    <script>
+        const apiKey = '68622df359e1f37849bae38c5fafd8f6'; // Votre clé API OpenWeatherMap
+        const cityId = '6453974'; // ID de la ville Villereau (45170)
+        const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?id=${cityId}&appid=${apiKey}&units=metric&lang=fr`;
+        const hourlyForecastUrl = `https://api.openweathermap.org/data/2.5/forecast?id=${cityId}&appid=${apiKey}&units=metric&lang=fr`;
+
+        async function fetchWeather() {
+            try {
+                const response = await fetch(currentWeatherUrl);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                displayCurrentWeather(data);
+            } catch (error) {
+                console.error('Erreur lors de la récupération des données météorologiques:', error);
+                document.getElementById('current-weather').innerHTML = '<p>Erreur lors de la récupération des données météorologiques.</p>';
+            }
+        }
+
+        async function fetchHourlyForecast() {
+            try {
+                const response = await fetch(hourlyForecastUrl);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                displayHourlyForecast(data);
+            } catch (error) {
+                console.error('Erreur lors de la récupération des prévisions horaires:', error);
+                document.getElementById('hourly-forecast').innerHTML = '<p>Erreur lors de la récupération des prévisions horaires.</p>';
+            }
+        }
+
+        function displayCurrentWeather(data) {
+            const weatherInfo = document.getElementById('current-weather');
+            weatherInfo.innerHTML = `
+                <p>Température: ${data.main.temp} °C</p>
+                <p>Description: ${data.weather[0].description}</p>
+                <p>Humidité: ${data.main.humidity} %</p>
+                <p>Vent: ${data.wind.speed} m/s</p>
+            `;
+        }
+
+        function displayHourlyForecast(data) {
+            const forecastInfo = document.getElementById('hourly-forecast');
+            let forecastHTML = '<h2>Prévisions horaires</h2>';
+            data.list.slice(0, 5).forEach(forecast => {
+                forecastHTML += `
+                    <div>
+                        <p>${new Date(forecast.dt * 1000).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}</p>
+                        <p>Température: ${forecast.main.temp} °C</p>
+                        <p>Description: ${forecast.weather[0].description}</p>
+                    </div>
+                `;
+            });
+            forecastInfo.innerHTML = forecastHTML;
+        }
+
+        fetchWeather();
+        fetchHourlyForecast();
+    </script>
 </body>
 </html>
+
