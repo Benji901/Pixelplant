@@ -34,7 +34,7 @@
         .weather-info, .forecast-box {
             margin-top: 20px;
         }
-        .forecast-box {
+        .forecast-box, .current-weather-box {
             border: 2px solid black;
             padding: 10px;
             background-color: white;
@@ -52,13 +52,12 @@
         <h1>PixelPlant</h1>
     </div>
     <div class="header">
-        <div id="current-weather" class="weather-info"></div>
+        <div id="current-weather" class="current-weather-box"></div>
         <div id="next-forecast" class="forecast-box"></div>
         <div class="additional-info">
             <h2>Informations supplémentaires</h2>
             <p id="sunrise">Lever du soleil: </p>
             <p id="sunset">Coucher du soleil: </p>
-            <p id="cloudiness">Couverture nuageuse: </p>
             <p id="weather">Météo: </p>
         </div>
     </div>
@@ -100,9 +99,13 @@
         function displayCurrentWeather(data) {
             const weatherInfo = document.getElementById('current-weather');
             weatherInfo.innerHTML = `
-                <p>Météo actuelle: ${data.weather[0].description} | Température: ${data.main.temp} °C | Humidité: ${data.main.humidity} % | Pression: ${data.main.pressure} hPa | Vent: ${data.wind.speed} m/s</p>
+                <h2>Météo actuelle</h2>
+                <p>Description: ${data.weather[0].description}</p>
+                <p>Température: ${data.main.temp} °C</p>
+                <p>Humidité: ${data.main.humidity} %</p>
+                <p>Pression: ${data.main.pressure} hPa</p>
+                <p>Vent: ${data.wind.speed} m/s</p>
             `;
-            document.getElementById('cloudiness').textContent += `${data.clouds.all}%`;
             document.getElementById('weather').textContent += `${data.weather[0].main}`;
         }
 
@@ -111,7 +114,12 @@
             const nextForecast = data.list[0];
             forecastInfo.innerHTML = `
                 <h2>Prochaine prévision</h2>
-                <p>${new Date(nextForecast.dt * 1000).toLocaleString('fr-FR', { hour: '2-digit', minute: '2-digit' })} | Température: ${nextForecast.main.temp} °C | Humidité: ${nextForecast.main.humidity} % | Pression: ${nextForecast.main.pressure} hPa | Vent: ${nextForecast.wind.speed} m/s | Couverture nuageuse: ${nextForecast.clouds.all} %</p>
+                <p>${new Date(nextForecast.dt * 1000).toLocaleString('fr-FR', { hour: '2-digit', minute: '2-digit' })}</p>
+                <p>Température: ${nextForecast.main.temp} °C</p>
+                <p>Humidité: ${nextForecast.main.humidity} %</p>
+                <p>Pression: ${nextForecast.main.pressure} hPa</p>
+                <p>Vent: ${nextForecast.wind.speed} m/s</p>
+                <p>Couverture nuageuse: ${nextForecast.clouds.all} %</p>
             `;
         }
 
