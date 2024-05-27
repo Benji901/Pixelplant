@@ -13,6 +13,11 @@
             margin: 0;
             padding: 0;
         }
+        .top-banner {
+            background-color: #000; /* Couleur de fond noir */
+            color: white;
+            padding: 10px;
+        }
         .header {
             display: flex;
             justify-content: space-between;
@@ -20,6 +25,7 @@
             background-color: #00008B; /* Couleur de fond bleu foncé */
             color: white;
             padding: 20px;
+            height: 123px; /* Hauteur réduite en fonction du nombre d'or */
         }
         .weather-info {
             margin: 20px 0;
@@ -33,7 +39,11 @@
     </style>
 </head>
 <body>
-    <!-- Bandeau bleu foncé en haut de la page -->
+    <!-- Bandeau noir en haut de la page avec le nom du projet -->
+    <div class="top-banner">
+        <h1>PixelPlant</h1>
+    </div>
+    <!-- Bandeau bleu foncé en dessous du bandeau noir -->
     <div class="header">
         <div>
             <h1>Météo à Villereau (45170)</h1>
