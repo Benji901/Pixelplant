@@ -8,44 +8,55 @@
     <style>
         body {
             font-family: 'Glacial Indifference', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         .bandeau {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 20px;
+            background-color: #000;
+            color: #fff;
+            height: 50px;
         }
         .bandeau-meteo {
             background-color: #00008B;
             color: #fff;
             display: flex;
-            flex-direction: column;
-            justify-content: center; /* Centre les éléments verticalement */
             height: 150px;
-            padding: 20px;
         }
-        .encart-meteo {
+        .section {
+            flex: 1;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
+            justify-content: center;
+            padding: 10px;
+        }
+        .divider {
+            width: 5px;
+            background-color: #fff;
         }
         .titre {
-            font-size: 1.1em;
-            margin-bottom: 10px;
+            font-size: 0.9em; /* Réduit la taille de la police pour le titre */
+            margin-bottom: 5px; /* Réduit l'espace en bas du titre */
         }
         .info {
-            font-size: 0.9em;
+            font-size: 0.8em; /* Réduit la taille de la police pour les infos */
+            margin: 1px 0; /* Réduit l'espace vertical entre les infos */
+            line-height: 1em; /* Réduit la hauteur des lignes */
         }
     </style>
 </head>
 <body>
-    <div class="bandeau" style="background-color: #000; color: #fff; height: 50px;">
+    <div class="bandeau">
         <div style="font-weight: bold; font-size: 1.2em;">PixelPlant</div>
         <div id="datetime" style="font-size: 0.8em;"></div>
     </div>
 
-    <div id="weather" class="bandeau-meteo">
-        <div class="encart-meteo">
+    <div class="bandeau-meteo">
+        <div class="section">
             <div class="titre">Météo actuelle:</div>
             <div id="temperature" class="info">Température: </div>
             <div id="pressure" class="info">Pression atmosphérique: </div>
@@ -55,6 +66,14 @@
             <div id="wind-speed" class="info">Vitesse du vent: </div>
             <div id="wind-direction" class="info">Direction du vent: </div>
             <div id="rain" class="info">Pluie dans l'heure: </div>
+        </div>
+        <div class="divider"></div>
+        <div class="section">
+            <!-- Contenu de la deuxième section -->
+        </div>
+        <div class="divider"></div>
+        <div class="section">
+            <!-- Contenu de la troisième section -->
         </div>
     </div>
 
@@ -111,6 +130,3 @@
     </script>
 </body>
 </html>
-
-
-
